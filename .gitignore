@@ -1,0 +1,4 @@
+# 编译产物（不要提交）
+visual/visual
+navigate/navigate
+*.o

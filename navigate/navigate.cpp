@@ -64,7 +64,7 @@ class MAP_BASE
 			std::memset(visit, false, sizeof(visit));
 		}
 		
-		void print(std::vector<std::string> map_in)
+		void print()
 		{
 			for (const auto& line : map_in)
 		        std::cout << line << '\n';
@@ -87,4 +87,64 @@ class MAP_BASE
 */
 
 //IMPLEMENT YOUR CODE HERE
-
+using namespace std;
+class SHORTEST_PATH : public MAP_BASE {
+	public:
+	bool is_3x3_clear (int r, int c){
+		for (int i = -1; i <= 1; ++i){
+			for (int j = -1; j <= 1; ++j){
+				if(map_in[r + i][c + j] == '#') return false;
+			}
+		}
+		return true;
+	}
+	void path(){
+		const int W = 70, H = 14;
+		int dist[H][W];
+		for (int r = 0;r < H; ++r){
+			for (int c = 0;c < W; ++c){
+				dist[r][c] = -1;
+			}
+		}
+		queue<pair<int,int>> bfs;
+		dist[2][2] = 0;
+		bfs.push({2,2});
+		int dr[4] = {-1,1,0,0};
+		int dc[4] = {0,0,-1,1};
+		while (!bfs.empty()){
+			pair<int,int> cur = bfs.front();
+			bfs.pop();
+			if (cur.first == 11 && cur.second == 68) break;
+			for (int i = 0; i < 4; ++i){
+				int nr = cur.first + dr[i], nc = cur.second + dc[i];
+				if (nr >= 2 && nr <=11 && nc >= 2 && nc <= 68 &&
+					is_3x3_clear(nr,nc) &&
+					dist[nr][nc] == -1){
+						bfs.push({nr,nc});
+						dist[nr][nc] = dist[cur.first][cur.second] + 1;
+				}
+			}
+		}
+		int r = 11, c = 68;
+	while (r != 2 || c != 2){
+		bool found = false;
+		for (int i = 0; i < 4; ++i){
+			map_in[r][c] = 'C';
+			int nr = r + dr[i], nc = c + dc[i];
+			if (nr >= 2 && nr <= 11 && nc >= 2 && nc <= 68 &&
+				is_3x3_clear(nr,nc) &&
+				dist[nr][nc] == dist[r][c] - 1){
+				r = nr, c = nc;
+				found = true;
+			}
+		}
+		if (!found) break;
+	}
+	map_in[2][2] = 'C';
+	}
+};
+int main (){
+    SHORTEST_PATH navigator;
+    navigator.path();
+    navigator.print();
+}
