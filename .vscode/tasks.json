@@ -1,0 +1,37 @@
+{
+  // ===== 附加题仓库的构建任务 =====
+  // 注意：VS Code 自动生成的那个任务用的是 gcc（C 编译器），
+  //       编 .cpp 时会"编译通过但链接失败"（undefined reference to std::cout）。
+  //       C++ 必须用 g++。下面第一个任务就是正确版本。
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // Ctrl+Shift+B 默认跑这个：用 g++ 编译"当前打开的文件"
+      "label": "编译当前文件 (g++)",
+      "type": "shell",
+      "command": "g++ -std=c++17 -Wall -Wextra -g ${file} -o ${fileDirname}/${fileBasenameNoExtension}",
+      "options": { "cwd": "${fileDirname}" },
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+    },
+    {
+      // 附加题一：编译 + 运行 visual
+      "label": "编译并运行 visual",
+      "type": "shell",
+      "command": "cd visual && g++ -std=c++17 -Wall -o visual visual.cpp && ./visual",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"],
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+    },
+    {
+      // 附加题二：编译 + 运行 navigate
+      "label": "编译并运行 navigate",
+      "type": "shell",
+      "command": "cd navigate && g++ -std=c++17 -Wall -o navigate navigate.cpp && ./navigate",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"],
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  // ===== 附加题仓库的调试配置（F5 时用左上角下拉选择）=====
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "调试 visual（自瞄选目标）",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/visual/visual",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/visual",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "编译并运行 visual"
+    },
+    {
+      "name": "调试 navigate（迷宫最短路）",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/navigate/navigate",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}/navigate",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "preLaunchTask": "编译并运行 navigate"
+    }
+  ]
+}

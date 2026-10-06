@@ -29,7 +29,33 @@
 using namespace std;
 
 // ==================== 在此处编写 Enemy和Target 类 ====================
-
+class Enemy {
+    public:
+    Enemy(): id('?'), x_(0), y_(0) {}
+    void Set(char ID,double x,double y)
+    {id = ID;x_ = x; y_ = y;}
+    double getX() const {return x_;}
+    double getY() const {return y_;}//函数不需要参数，因为它本身是Enemy里的成员，可以直接访问和使用自身属性
+    char getid() const {return id;}
+    private:
+    char id; double x_ , y_;
+};
+class Target {
+    public:
+    void setEnemy (int index,char ID,double x,double y){
+        enemies[index].Set(ID,x,y);
+    }
+    char choose () const {
+        int best = 0;
+        for (int i = 1; i < 4; ++i){
+            double d = enemies[i].getX() * enemies[i].getX() + enemies[i].getY() * enemies[i].getY();
+            if (d < enemies[best].getX() * enemies[best].getX() + enemies[best].getY() * enemies[best].getY()) best = i;
+        }//调用Enemy的成员函数必须要有enemy对象，此处对象由target本身成员提供
+        return enemies[best].getid();
+    }
+    private:
+    Enemy enemies[4];
+};
 
 
 // ====================================================================
@@ -45,10 +71,11 @@ int main() {
         cin >> id >> x >> y;
 
         //在此处调用你的Enemy的设置函数，传入id,x,y
-        
+        target.setEnemy(i,id,x,y);//不能直接用Enemy里的Set函数，没有相应的Enemy对象，无法访问和更改private里的参数
     }
 
     // 调用查找并输出最佳目标
+    cout << target.choose() << endl;
 
     return 0;
 }
